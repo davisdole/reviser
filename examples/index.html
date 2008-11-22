@@ -12,26 +12,29 @@
 
     <link href="stylesheets/blueprint/screen.css?1227200779" media="screen" rel="stylesheet" type="text/css" />
     <link href="stylesheets/blueprint/print.css?1227200779" media="print" rel="stylesheet" type="text/css" />
+    <link href="javascripts/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
     <!--[if IE]><link href="/stylesheets/blueprint/ie.css?1227200779" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
 		<script src="javascripts/jquery.js?1227200779" type="text/javascript"></script>
 		<script src="javascripts/jquery-ui.js?1227200779" type="text/javascript"></script>
 		<script src="javascripts/reviser.js?1227314324" type="text/javascript"></script>
+		<script src="javascripts/facebox/facebox.js?1227314324" type="text/javascript"></script>
 		<style type="text/css" media="screen">
 			@import "stylesheets/reviser.css";
+			@import "javascripts/facebox/facebox.css";
 		</style>
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
-			$('.reviser').click(function(){
-				this.editor = new DS.Reviser({
-					elm:this,
-					beforeSave:function(html){
-						console.log("Before Save");
-					},
-					afterSave:function(html){
-						console.log(html);
-					}
-				});
-			});
+			// $('.reviser').click(function(){
+			// 				this.editor = new DS.Reviser({
+			// 					elm:this,
+			// 					beforeSave:function(html){
+			// 						console.log("Before Save");
+			// 					},
+			// 					afterSave:function(html){
+			// 						console.log(html);
+			// 					}
+			// 				});
+			// 			});
 		});
 		</script>
 	</head>

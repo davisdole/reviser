@@ -6,6 +6,7 @@ var DS = {
 		this.afterSaveCallBack  = cfg.afterSave || function(){return false};
 		// the elem we are editing
 		this.editorElement 			= $(cfg.elm); 
+		$.facebox({div:cfg.elm});
 		this.cfg 								= cfg;
 		// save the content for revert
 		this.contentBackup 			= this.editorElement.html(); 
