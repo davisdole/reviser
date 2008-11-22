@@ -40,10 +40,13 @@ var DS = {
 			});*/
 			this.menu.remove();
 			this.editorElement.attr('contenteditable',false);
+			this.rebindElement();
+			return false;
+		};
+		this.rebindElement = function(){
 			$(this.editorElement).click(function(){
 				this.editor = new DS.Reviser(this.editor.cfg);
 			});
-			return false;
 		};
 		/*------------------------------------*/
 		
@@ -77,6 +80,7 @@ var DS = {
 				$(this).click(function(){
 					// Methods bound to dom elems but scoped to Menu 
 					scope[this.id].call(scope);
+					return false;
 				});
 			});
 		};
