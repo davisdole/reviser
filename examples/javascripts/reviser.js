@@ -2,7 +2,7 @@ var DS = {
 	Reviser:function(cfg) {
 		/* initialization */
 		this.cfg 								= cfg;
-		
+		this.threshold					= cfg.threshold || 600;
 		// Assign CallBacks
 		this.beforeSaveCallBack = cfg.beforeSave || function(html){return html;};
 		this.afterSaveCallBack  = cfg.afterSave  || function(){return false;};
@@ -12,7 +12,7 @@ var DS = {
 		this.actualElement = this.editorElement; // Used by modal
 		
 		// editorType, inline || modal. If undefined Reviser guesses based on width < cfg.threshold
-		this.editorType    = cfg.editorType || ((this.editorElement.width() < (cfg.threshold || 600)) ? 'modal':'inline');		
+		this.editorType    = cfg.editorType || ((this.editorElement.width() < this.threshold) ? 'modal':'inline');		
 		
 		/*-------- Editor Core ---------------*/
 		this.drawModalEditor = function(){
