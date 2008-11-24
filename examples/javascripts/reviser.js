@@ -9,11 +9,10 @@ var DS = {
 		
 		// the elem we are editing
 		this.editorElement = $(cfg.elm);
-		this.actualElement = this.editorElement;
+		this.actualElement = this.editorElement; // Used by modal
 		
-		// editorType, inline || modal
+		// editorType, inline || modal. If undefined Reviser guesses based on width
 		this.editorType    = cfg.editorType || ((this.editorElement.width() < 600) ? 'modal':'inline');		
-
 		
 		/*-------- Editor Core ---------------*/
 		this.drawModalEditor = function(){
@@ -80,18 +79,22 @@ var DS = {
 	Menu:function(editor){
 		// Loading the Commands
 		$.extend(this,DS.Commands);
-		
+		this.editor = editor;
 		// This should be passed in through a cfg at soem point
-		var menu = $('<div class="reviser_menu" style="z-index:200">\
+		var menu = $('<div class="reviser_menu" >\
 			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold">bold</a>\
 			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic">italic</a>\
 			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike">strike</a>\
 			<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under">underline</a>\
+			<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
+			<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
+			<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
+			<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4">h4</a>\
 			<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">image</a>\
 			<a href="#" class="reviser_btn" id="blockquoteSelection" alt="Insert Block Quote">block quote</a>\
 			<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">ordered list</a>\
 			<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">unordered list</a>\
-			<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">link</a>\
+			<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
 			<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
 			<a href="#" class="reviser_btn" id="revert" alt="Save">cancel</a>\
 		</div>');
@@ -173,6 +176,32 @@ var DS = {
 		     range.collapse(false);
 		     range.select();
 		   } else {
+				console.log(document.getSelection());
+				 var html = this.needInput('HTML?');
+		     return this.exec('insertHTML', html);
+		   }
+		},
+		insertH1: function() {
+	 		this.wrap('h1');
+		},
+		insertH2: function() {
+	 		this.wrap('h2');
+		},
+		insertH3: function() {
+	 		this.wrap('h3');
+		},
+		insertH4: function() {
+	 		this.wrap('h4');
+		},
+		wrap: function(tag) {
+			if ($.browser.msie) {
+		     var range = this.editingElement._selection.getRange();
+		     range.pasteHTML(html);
+		     range.collapse(false);
+		     range.select();
+		   } else {
+			   var text = document.getSelection();
+				 var html = '<'+tag+'>'+text+'</'+tag+'>';
 		     return this.exec('insertHTML', html);
 		   }
 		},
@@ -190,9 +219,3 @@ var DS = {
 		}
 	}
 };
-
-
-
-
-
-
