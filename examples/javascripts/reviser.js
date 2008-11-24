@@ -179,7 +179,7 @@ var DS = {
 		needInput:function(msg) {
 			var resp = prompt(msg);
 			if (resp == "") {
-				this.getInput(msg);
+				this.needInput(msg);
 			}else{
 				return resp;
 			}
