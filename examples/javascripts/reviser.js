@@ -11,8 +11,8 @@ var DS = {
 		this.editorElement = $(cfg.elm);
 		this.actualElement = this.editorElement; // Used by modal
 		
-		// editorType, inline || modal. If undefined Reviser guesses based on width
-		this.editorType    = cfg.editorType || ((this.editorElement.width() < 600) ? 'modal':'inline');		
+		// editorType, inline || modal. If undefined Reviser guesses based on width < cfg.threshold
+		this.editorType    = cfg.editorType || ((this.editorElement.width() < (cfg.threshold || 600)) ? 'modal':'inline');		
 		
 		/*-------- Editor Core ---------------*/
 		this.drawModalEditor = function(){
@@ -26,7 +26,7 @@ var DS = {
 		};
 		this.setupEditor = function() {
 			// create a new Menu and pass it an editor instance
-			this.menu = new DS.Menu(this);
+			this.menu = new DS.Menu(this); 
 			if (this.editorType == 'inline') {
 				this.appendMenuToElement();
 				this.setElementToEditable();
@@ -34,7 +34,7 @@ var DS = {
 				this.drawModalEditor();
 			}
 			// save the content for revert
-			this.contentBackup = this.editorElement.html();
+			this.contentBackup = this.editorElement.html(); 
 		};
 		this.appendMenuToElement = function() {
 			var coords = this.editorElement.offset();
@@ -53,7 +53,7 @@ var DS = {
 		
 		// get rid of the click and start editing
 		this.setElementToEditable = function(){
-			this.editorElement.unbind('click');
+			this.editorElement.unbind('click'); 
 			this.editorElement.attr('contenteditable',true);
 			return true;
 		};
@@ -73,8 +73,6 @@ var DS = {
 		
 		// starting up
 		this.setupEditor();
-		
-		
 	},
 	Menu:function(editor){
 		// Loading the Commands
@@ -104,7 +102,7 @@ var DS = {
 			var scope 	= this;
 			$('.reviser_btn',menu).each(function(){
 				$(this).click(function(){
-					// Methods bound to dom elems but scoped to Menu
+					// Methods bound to dom elems but scoped to Menu 
 					scope[this.id].call(scope);
 				});
 			});
@@ -176,22 +174,21 @@ var DS = {
 		     range.collapse(false);
 		     range.select();
 		   } else {
-				console.log(document.getSelection());
 				 var html = this.needInput('HTML?');
 		     return this.exec('insertHTML', html);
 		   }
 		},
 		insertH1: function() {
-	 		this.wrap('h1');
+	 		return this.exec('FormatBlock', "h1");
 		},
 		insertH2: function() {
-	 		this.wrap('h2');
+	 		return this.exec('FormatBlock', "h2");
 		},
 		insertH3: function() {
-	 		this.wrap('h3');
+	 		return this.exec('FormatBlock', "h3");
 		},
 		insertH4: function() {
-	 		this.wrap('h4');
+	 		return this.exec('FormatBlock', "h4");
 		},
 		wrap: function(tag) {
 			if ($.browser.msie) {
