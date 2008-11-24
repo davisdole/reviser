@@ -1,17 +1,42 @@
 var DS = {
 	Reviser:function(cfg) {
 		/* initialization */
-		// don't call it a callBack, ive been here for...
-		this.beforeSaveCallBack = cfg.beforeSave || function(html){return html;};
-		this.afterSaveCallBack  = cfg.afterSave || function(){return false};
-		// the elem we are editing
-		this.editorElement 			= $(cfg.elm); 
 		this.cfg 								= cfg;
-		// save the content for revert
-		this.contentBackup 			= this.editorElement.html(); 
-		// create a new Menu and pass it an editor instance
-		this.menu 							= new DS.Menu(this); 
+		
+		// Assign CallBacks
+		this.beforeSaveCallBack = cfg.beforeSave || function(html){return html;};
+		this.afterSaveCallBack  = cfg.afterSave  || function(){return false;};
+		
+		// the elem we are editing
+		this.editorElement = $(cfg.elm);
+		this.actualElement = this.editorElement;
+		
+		// editorType, inline || modal
+		this.editorType    = cfg.editorType || ((this.editorElement.width() < 600) ? 'modal':'inline');		
+
+		
 		/*-------- Editor Core ---------------*/
+		this.drawModalEditor = function(){
+			var frame = $('<div id="modal_reviser"></div>');
+			var editorContent = $('<div id="editorContent" contenteditable="true"></div>');
+			editorContent.html(this.editorElement.html());
+			frame.append(this.menu);
+			frame.append(editorContent);
+			$.facebox(frame,'reviser');
+			this.editorElement = editorContent;
+		};
+		this.setupEditor = function() {
+			// create a new Menu and pass it an editor instance
+			this.menu = new DS.Menu(this);
+			if (this.editorType == 'inline') {
+				this.appendMenuToElement();
+				this.setElementToEditable();
+			}else{
+				this.drawModalEditor();
+			}
+			// save the content for revert
+			this.contentBackup = this.editorElement.html();
+		};
 		this.appendMenuToElement = function() {
 			var coords = this.editorElement.offset();
 			this.menu.attr("id",this.editorElement[0].id + '_reviser');
@@ -29,7 +54,7 @@ var DS = {
 		
 		// get rid of the click and start editing
 		this.setElementToEditable = function(){
-			this.editorElement.unbind('click'); 
+			this.editorElement.unbind('click');
 			this.editorElement.attr('contenteditable',true);
 			return true;
 		};
@@ -48,15 +73,16 @@ var DS = {
 		/*------------------------------------*/
 		
 		// starting up
-		this.appendMenuToElement();
-		this.setElementToEditable();
+		this.setupEditor();
+		
+		
 	},
 	Menu:function(editor){
 		// Loading the Commands
 		$.extend(this,DS.Commands);
 		
 		// This should be passed in through a cfg at soem point
-		var menu = $('<div class="reviser_menu">\
+		var menu = $('<div class="reviser_menu" style="z-index:200">\
 			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold">bold</a>\
 			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic">italic</a>\
 			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike">strike</a>\
@@ -75,7 +101,7 @@ var DS = {
 			var scope 	= this;
 			$('.reviser_btn',menu).each(function(){
 				$(this).click(function(){
-					// Methods bound to dom elems but scoped to Menu 
+					// Methods bound to dom elems but scoped to Menu
 					scope[this.id].call(scope);
 				});
 			});
@@ -83,15 +109,22 @@ var DS = {
 		// Kill editing and send callbacks with elems innerHtml
 		this.save = function(){
 			// pre-process through beforeSave
-			editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
-			editor.setElementToNonEditable();
+			if (this.editorType=='inline') {
+				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
+				editor.setElementToNonEditable();
+			}else{
+				$.facebox.close();
+				editor.actualElement.html(editor.editorElement.html());
+			}
+			
 			// send afterSave with elems innerHtml
-			editor.afterSaveCallBack(editor.editorElement.html())
+			editor.afterSaveCallBack(editor.editorElement.html());
 		};
 		// Don't like it, revert it.
 		this.revert = function(){
 			editor.editorElement.html(editor.contentBackup);
 			editor.setElementToNonEditable();
+			$.facebox.close();
 			return false;
 		};
 		// bind that trick
@@ -157,3 +190,9 @@ var DS = {
 		}
 	}
 };
+
+
+
+
+
+
