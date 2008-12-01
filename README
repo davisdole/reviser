@@ -3,6 +3,21 @@ Reviser
 A wysiwig editor for editing any element inline. Inspired by wysihat http://github.com/josh/wysihat/tree. 
 Still very much a work in progress.
 
-Facebox is in the examples dir as a temp solution to having a modal editing mode.
+Example:
 
-Check examples for usage.
+$('.editable_elements').click(function(){
+	this.editor = new DS.Reviser({
+		elm:this,
+		editorType:'inline', // inline || modal, leave it to use best guess 
+		beforeSave:function(html){
+			console.log("Before Save"); // preprocess stuff here if needed.
+			return html;
+		},
+		afterSave:function(html){
+			console.log(html); // ajaxy stuff here
+		}
+	});
+});
+
+
+Check examples for a working example.
