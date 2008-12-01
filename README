@@ -8,7 +8,7 @@ Example:
 $('.editable_elements').click(function(){
 	this.editor = new DS.Reviser({
 		elm:this,
-		editorType:'inline', // inline || modal, leave it to use best guess 
+		editorType:'inline', // inline || modal, leave it out to use best guess based on size
 		beforeSave:function(html){
 			console.log("Before Save"); // preprocess stuff here if needed.
 			return html;

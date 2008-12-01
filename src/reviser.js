@@ -29,7 +29,7 @@ var DS = {
 				'height':this._h + 'px',
 				'position':'absolute',
 				'left':x,
-				'top':'50px'
+				'top':$(document).scrollTop()+20
 			});
 			
 			$('body').append(this.winHTML);
