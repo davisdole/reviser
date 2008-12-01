@@ -12,24 +12,38 @@
 
     <link href="./stylesheets/blueprint/screen.css?1227200779" media="screen" rel="stylesheet" type="text/css" />
     <link href="./stylesheets/blueprint/print.css?1227200779" media="print" rel="stylesheet" type="text/css" />
-    <link href="./javascripts/facebox/facebox.css?1227200779" media="print" rel="stylesheet" type="text/css" />
     <!--[if IE]><link href="/stylesheets/blueprint/ie.css?1227200779" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
 		<script src="../src/jquery.js?1227200779" type="text/javascript"></script>
 		<script src="../src/jquery-ui.js?1227200779" type="text/javascript"></script>
 		<script src="../src/reviser.js?1227314324" type="text/javascript"></script>
-		<script src="./javascripts/facebox/facebox.js?1227314324" type="text/javascript"></script>
 		<style type="text/css" media="screen">
 			@import "stylesheets/reviser.css";
 			body {
 				margin:1em;
 			}
 		</style>
+		<style type="text/css" media="screen">
+			.twoism_modal{
+				background:#fff;
+				border:1px solid #ddd;
+			}
+			.tm_top,.tm_btm{
+				height:5px;
+				background:#eee;
+				padding:0px;
+			}
+			.tm_left,.tm_right{
+				width:5px;
+				background:#eee;
+				padding:0px;
+			}
+			
+		</style>
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
 			$('.reviser').click(function(){
 				this.editor = new DS.Reviser({
 					elm:this,
-					editorType:'inline',
 					beforeSave:function(html){
 						return html;
 						console.log("Before Save");
@@ -49,7 +63,7 @@
 				custom modal box when the the editor requires more space than is
 				available.</p>
 			<div id="content">
-				<div class="reviser" id="left">
+				<div class="reviser" id="left" style="width:601px">
 					<h2>Duis aute irure dolor in reprehenderit</h1>
 
 					<p>	The civilization now in jeopardy is all humanity. As the ancient myth makers knew, we are children equally of the earth and sky. In our tenure of this planet, we have accumulated dangerous, evolutionary baggage -- propensities for aggression and ritual, submission to leaders, hostility to outsiders, all of which puts our survival in some doubt. We have also acquired compassion for others, love for our children, a desire to learn from history and experience, and a great, soaring passionate intelligence -- the clear tools for our continued survival and prosperity.

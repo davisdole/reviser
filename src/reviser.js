@@ -1,4 +1,44 @@
 var DS = {
+	Modal:function(cfg){
+		this.displayElem = cfg.displayElem;
+		this._w		  		 = cfg._w || 'auto';
+		this._h		  		 = cfg._h || 'auto';
+		
+		this.winHTML 	 = $('<table class="twoism_modal">\
+													<tr>\
+														<td colspan="3" class="tm_top"></td>\
+													</tr>\
+													<tr>\
+														<td class="tm_left">&nbsp;</td>\
+														<td valign="top" style="vertical-align:top" id="tm_content">&nbsp;</td>\
+														<td class="tm_right">&nbsp;</td>\
+													</tr>\
+													<tr>\
+														<td colspan="3" class="tm_btm"></td>\
+													</tr>\
+												</table>');
+		this.closeModal  = function() {
+			this.winHTML.remove();
+			return false;
+		};
+		this.drawModal   = function() {
+			$('#tm_content', this.winHTML).html(this.displayElem);
+			var x = ($('body').width()/2)-(this._w/2);
+			this.winHTML.css({
+				'width':this._w  + 'px',
+				'height':this._h + 'px',
+				'position':'absolute',
+				'left':x,
+				'top':'50px'
+			});
+			
+			$('body').append(this.winHTML);
+			return this.winHTML;
+		};
+		
+		return this.drawModal();
+		
+	},
 	Reviser:function(cfg) {
 		/* initialization */
 		this.cfg 								= cfg;
@@ -21,7 +61,11 @@ var DS = {
 			editorContent.html(this.editorElement.html());
 			frame.append(this.menu);
 			frame.append(editorContent);
-			$.facebox(frame,'reviser');
+			var modal = new DS.Modal({
+				_w: 700,
+				_h: 400,
+				displayElem:frame
+			});
 			this.editorElement = editorContent;
 		};
 		this.setupEditor = function() {
@@ -114,7 +158,7 @@ var DS = {
 				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
 				editor.setElementToNonEditable();
 			}else{
-				$.facebox.close();
+				$('.twoism_modal').remove();
 				editor.actualElement.html(editor.editorElement.html());
 			}
 			
@@ -125,7 +169,7 @@ var DS = {
 		this.revert = function(){
 			editor.editorElement.html(editor.contentBackup);
 			editor.setElementToNonEditable();
-			$.facebox.close();
+			$('.twoism_modal').remove();
 			return false;
 		};
 		// bind that trick
