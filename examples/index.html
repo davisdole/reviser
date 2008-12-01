@@ -10,22 +10,26 @@
 		<meta name="resource-type" content="document" />
 		<meta name="MSSmartTagsPreventParsing" content="true" />
 
-    <link href="stylesheets/blueprint/screen.css?1227200779" media="screen" rel="stylesheet" type="text/css" />
-    <link href="stylesheets/blueprint/print.css?1227200779" media="print" rel="stylesheet" type="text/css" />
-    <link href="javascripts/facebox/facebox.css?1227200779" media="print" rel="stylesheet" type="text/css" />
+    <link href="./stylesheets/blueprint/screen.css?1227200779" media="screen" rel="stylesheet" type="text/css" />
+    <link href="./stylesheets/blueprint/print.css?1227200779" media="print" rel="stylesheet" type="text/css" />
+    <link href="./javascripts/facebox/facebox.css?1227200779" media="print" rel="stylesheet" type="text/css" />
     <!--[if IE]><link href="/stylesheets/blueprint/ie.css?1227200779" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
-		<script src="javascripts/jquery.js?1227200779" type="text/javascript"></script>
-		<script src="javascripts/jquery-ui.js?1227200779" type="text/javascript"></script>
-		<script src="javascripts/reviser.js?1227314324" type="text/javascript"></script>
-		<script src="javascripts/facebox/facebox.js?1227314324" type="text/javascript"></script>
+		<script src="../src/jquery.js?1227200779" type="text/javascript"></script>
+		<script src="../src/jquery-ui.js?1227200779" type="text/javascript"></script>
+		<script src="../src/reviser.js?1227314324" type="text/javascript"></script>
+		<script src="./javascripts/facebox/facebox.js?1227314324" type="text/javascript"></script>
 		<style type="text/css" media="screen">
 			@import "stylesheets/reviser.css";
+			body {
+				margin:1em;
+			}
 		</style>
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
 			$('.reviser').click(function(){
 				this.editor = new DS.Reviser({
 					elm:this,
+					editorType:'inline',
 					beforeSave:function(html){
 						return html;
 						console.log("Before Save");
@@ -40,7 +44,10 @@
 	</head>
 	<body>
 		<div id="container">
-			<h2>Click the box below to begin editing.</h2><br>
+			<h2>Click the box below to begin editing.</h2>
+			<p>I am toying with the idea of either using facebox or writing a
+				custom modal box when the the editor requires more space than is
+				available.</p>
 			<div id="content">
 				<div class="reviser" id="left">
 					<h2>Duis aute irure dolor in reprehenderit</h1>

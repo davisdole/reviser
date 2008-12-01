@@ -2,4 +2,7 @@ Reviser
 
 A wysiwig editor for editing any element inline. Inspired by wysihat http://github.com/josh/wysihat/tree. 
 Still very much a work in progress.
+
+Facebox is in the examples dir as a temp solution to having a modal editing mode.
+
 Check examples for usage.
