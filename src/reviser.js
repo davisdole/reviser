@@ -133,6 +133,7 @@ var DS = {
 			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
 			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
 			<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
+			<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph">&lt;p&gt;</a>\
 			<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
 			<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
 			<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
@@ -160,7 +161,7 @@ var DS = {
 		// Kill editing and send callbacks with elems innerHtml
 		this.save = function(){
 			// pre-process through beforeSave
-			if (this.editorType=='inline') {
+			if (editor.editorType=='inline') {
 				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
 				editor.setElementToNonEditable();
 			}else{
@@ -238,6 +239,9 @@ var DS = {
 		},
 		insertH4: function() {
 	 		return this.exec('FormatBlock', "h4");
+		},
+		insertP: function() {
+	 		return this.exec('FormatBlock', "p");
 		},
 		needInput:function(msg) {
 			var resp = prompt(msg);
