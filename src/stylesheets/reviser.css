@@ -1,0 +1,27 @@
+.twoism_modal{
+	background:#fff;
+	border:1px solid #ddd;
+}
+.tm_top,.tm_btm{
+	height:5px;
+	background:#eee;
+	padding:0px;
+}
+.tm_left,.tm_right{
+	width:5px;
+	background:#eee;
+	padding:0px;
+}
+
+.reviser_menu{
+	background:#ddd;
+	padding:3px;
+	/*border:1px dotted #000;*/
+	border-bottom:none;
+}
+.reviser_menu a {
+	color:#000;
+	text-decoration:none;
+	background:#eee;
+	padding:3px;
+}
