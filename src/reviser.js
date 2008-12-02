@@ -33,7 +33,7 @@ var DS = {
 			});
 			
 			$('body').append(this.winHTML);
-			return this.winHTML;
+			return this;
 		};
 		
 		return this.drawModal();
@@ -61,7 +61,7 @@ var DS = {
 			editorContent.html(this.editorElement.html());
 			frame.append(this.menu);
 			frame.append(editorContent);
-			var modal = new DS.Modal({
+			this.modal = new DS.Modal({
 				_w: 700,
 				_h: 400,
 				displayElem:frame
@@ -148,6 +148,7 @@ var DS = {
 				$(this).click(function(){
 					// Methods bound to dom elems but scoped to Menu 
 					scope[this.id].call(scope);
+					return false
 				});
 			});
 		};
@@ -158,7 +159,7 @@ var DS = {
 				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
 				editor.setElementToNonEditable();
 			}else{
-				$('.twoism_modal').remove();
+				editor.modal.closeModal();
 				editor.actualElement.html(editor.editorElement.html());
 			}
 			
@@ -167,9 +168,10 @@ var DS = {
 		};
 		// Don't like it, revert it.
 		this.revert = function(){
+			console.log(this)
 			editor.editorElement.html(editor.contentBackup);
 			editor.setElementToNonEditable();
-			$('.twoism_modal').remove();
+			editor.modal.closeModal();
 			return false;
 		};
 		// bind that trick
