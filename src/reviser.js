@@ -18,7 +18,10 @@ var DS = {
 													</tr>\
 												</table>');
 		this.closeModal  = function() {
-			this.winHTML.remove();
+			var win = this.winHTML;
+			this.winHTML.fadeOut('medium',function(){
+				win.remove();
+			});
 			return false;
 		};
 		this.drawModal   = function() {
@@ -28,11 +31,13 @@ var DS = {
 				'width':this._w  + 'px',
 				'height':this._h + 'px',
 				'position':'absolute',
+				'display':'none',
 				'left':x,
 				'top':$(document).scrollTop()+20
 			});
 			
 			$('body').append(this.winHTML);
+			this.winHTML.fadeIn('medium');
 			return this;
 		};
 		
@@ -124,21 +129,21 @@ var DS = {
 		this.editor = editor;
 		// This should be passed in through a cfg at soem point
 		var menu = $('<div class="reviser_menu" >\
-			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold">bold</a>\
-			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic">italic</a>\
-			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike">strike</a>\
-			<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under">underline</a>\
+			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
+			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
+			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
+			<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
 			<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
 			<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
 			<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
 			<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4">h4</a>\
-			<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">image</a>\
-			<a href="#" class="reviser_btn" id="blockquoteSelection" alt="Insert Block Quote">block quote</a>\
-			<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">ordered list</a>\
-			<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">unordered list</a>\
+			<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">&lt;img&gt;</a>\
+			<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
+			<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
+			<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
 			<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
 			<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
-			<a href="#" class="reviser_btn" id="revert" alt="Save">cancel</a>\
+			<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
 		</div>');
 		// Bind that trick
 		this.bindMenu = function(){

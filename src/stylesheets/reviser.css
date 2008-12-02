@@ -1,20 +1,20 @@
 .twoism_modal{
 	background:#fff;
-	border:1px solid #ddd;
+	border:1px solid #ccc;
 }
 .tm_top,.tm_btm{
 	height:5px;
-	background:#eee;
+	background:#ddd;
 	padding:0px;
 }
 .tm_left,.tm_right{
 	width:5px;
-	background:#eee;
+	background:#ddd;
 	padding:0px;
 }
 
 .reviser_menu{
-	background:#ddd;
+	background:#ccc;
 	padding:3px;
 	/*border:1px dotted #000;*/
 	border-bottom:none;
