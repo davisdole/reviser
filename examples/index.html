@@ -17,28 +17,25 @@
 		<script src="../src/jquery-ui.js?1227200779" type="text/javascript"></script>
 		<script src="../src/reviser.js?1227314324" type="text/javascript"></script>
 		<style type="text/css" media="screen">
-			@import "stylesheets/reviser.css";
+			@import "../src/stylesheets/reviser.css";
 			body {
 				margin:1em;
 			}
+			#left{
+				margin:1em;
+				padding:5px;
+				width:45%;
+			}
+			#right{
+				margin:1em;
+				padding:5px;
+				width:45%;
+			}
+			.reviser{
+				border:1px dotted #000;
+			}
 		</style>
-		<style type="text/css" media="screen">
-			.twoism_modal{
-				background:#fff;
-				border:1px solid #ddd;
-			}
-			.tm_top,.tm_btm{
-				height:5px;
-				background:#eee;
-				padding:0px;
-			}
-			.tm_left,.tm_right{
-				width:5px;
-				background:#eee;
-				padding:0px;
-			}
-			
-		</style>
+
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
 			$('.reviser').click(function(){
