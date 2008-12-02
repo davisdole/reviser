@@ -162,16 +162,14 @@ var DS = {
 				editor.modal.closeModal();
 				editor.actualElement.html(editor.editorElement.html());
 			}
-			
 			// send afterSave with elems innerHtml
 			editor.afterSaveCallBack(editor.editorElement.html());
 		};
 		// Don't like it, revert it.
 		this.revert = function(){
-			console.log(this)
 			editor.editorElement.html(editor.contentBackup);
 			editor.setElementToNonEditable();
-			editor.modal.closeModal();
+			if (editor.editorType=='modal') editor.modal.closeModal();
 			return false;
 		};
 		// bind that trick
@@ -235,18 +233,6 @@ var DS = {
 		},
 		insertH4: function() {
 	 		return this.exec('FormatBlock', "h4");
-		},
-		wrap: function(tag) {
-			if ($.browser.msie) {
-		     var range = this.editingElement._selection.getRange();
-		     range.pasteHTML(html);
-		     range.collapse(false);
-		     range.select();
-		   } else {
-			   var text = document.getSelection();
-				 var html = '<'+tag+'>'+text+'</'+tag+'>';
-		     return this.exec('insertHTML', html);
-		   }
 		},
 		needInput:function(msg) {
 			var resp = prompt(msg);
