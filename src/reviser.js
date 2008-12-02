@@ -10,7 +10,7 @@ var DS = {
 													</tr>\
 													<tr>\
 														<td class="tm_left">&nbsp;</td>\
-														<td valign="top" style="vertical-align:top" id="tm_content">&nbsp;</td>\
+														<td valign="top" style="vertical-align:top;padding:1px;" id="tm_content">&nbsp;</td>\
 														<td class="tm_right">&nbsp;</td>\
 													</tr>\
 													<tr>\
@@ -62,7 +62,7 @@ var DS = {
 			frame.append(this.menu);
 			frame.append(editorContent);
 			this.modal = new DS.Modal({
-				_w: 700,
+				_w: 620,
 				_h: 400,
 				displayElem:frame
 			});
