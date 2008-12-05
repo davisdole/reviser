@@ -162,7 +162,7 @@ var DS = {
 									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4"><img src="/src/images/btn_h4.png" border="0"></a>\
 									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image"><img src="/src/images/btn_image.png" border="0"></a>\
 									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link"><img src="/src/images/btn_link.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List"><img src="/src/images/btn_ul.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List"><img src="/src/images/btn_ol.png" border="0"></a>\
 									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List"><img src="/src/images/btn_ul.png" border="0"></a>\
 									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML"><img src="/src/images/btn_source.png" border="0"></a>\
 									<a href="#" class="reviser_btn" id="save" alt="Save"><img src="/src/images/btn_save.png" border="0"></a>\

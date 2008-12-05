@@ -6,7 +6,6 @@ fi
 
 rm -Rf reviser
 mkdir reviser
-mkdir releases
 cp -R src/* reviser
 cp README reviser
 cp MIT-LICENSE reviser
