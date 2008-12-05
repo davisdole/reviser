@@ -1,7 +1,7 @@
 Reviser
 
 A wysiwig editor for editing any element inline. Inspired by wysihat http://github.com/josh/wysihat/tree. 
-Still very much a work in progress.
+Still very much a work in progress, but getting there.
 
 Example:
 
@@ -20,5 +20,32 @@ $('.editable_elements').click(function(){
 	});
 });
 
+Custom Menu Example:
 
-Check examples for a working example.
+$(document).ready(function(){
+	$('.reviser').click(function(){
+		this.editor = new DS.Reviser({
+			elm:this,
+			menuHTML:$('<div class="reviser_menu" >\
+										<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
+										<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
+										<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
+										<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
+										<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph">&lt;p&gt;</a>\
+										<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">&lt;img&gt;</a>\
+										<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
+										<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
+										<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
+										<a href="#" class="reviser_btn" id="sourceMode" alt="HTML">source</a>\
+										<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
+										<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
+									</div>'),
+			afterSave:function(html){
+				console.log(html);
+			}
+		});
+	});
+});
+
+
+Check examples dir for a working example.

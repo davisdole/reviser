@@ -4,7 +4,7 @@ var DS = {
 		this._w		  		 = cfg._w || 'auto';
 		this._h		  		 = cfg._h || 'auto';
 		
-		this.winHTML 	 = $('<table class="twoism_modal">\
+		this.winHTML 	   = $('<table class="twoism_modal">\
 													<tr>\
 														<td colspan="3" class="tm_top"></td>\
 													</tr>\
@@ -41,9 +41,7 @@ var DS = {
 			this.winHTML.fadeIn('medium');
 			return this;
 		};
-		
 		return this.drawModal();
-		
 	},
 	Reviser:function(cfg) {
 		/* initialization */
@@ -102,8 +100,9 @@ var DS = {
 			});
 			this.menu.html.show();
 		};
-		
 		this.drawOverlay = function(){
+			// if the bgcolor of the element is transparent
+			// the element will not show above the overlay.
 			var bgcolor = (this.editorElement.css('background-color') != 'transparent') ? this.editorElement.css('background-color') : '#fff'
 			$('body').append('<div id="modal_overlay"></div>');
 			$('#modal_overlay').css({
@@ -124,7 +123,6 @@ var DS = {
 			});
 			$('#modal_overlay').fadeIn('medium').click(this.menu.revert);
 		};
-		
 		// get rid of the click and start editing
 		this.setElementToEditable = function(){
 			this.editorElement.unbind('click'); 
@@ -152,25 +150,25 @@ var DS = {
 		$.extend(this,DS.Commands);
 		this.editor = editor;
 		// This should be passed in through a cfg at soem point
-		this.html = $('<div class="reviser_menu" >\
-			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
-			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
-			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
-			<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
-			<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph">&lt;p&gt;</a>\
-			<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
-			<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
-			<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
-			<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4">h4</a>\
-			<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">&lt;img&gt;</a>\
-			<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
-			<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
-			<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
-			<a href="#" class="reviser_btn" id="sourceMode" alt="HTML">source</a>\
-			<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
-			<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
-			<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
-		</div>');
+		this.html = this.editor.cfg.menuHTML || $('<div class="reviser_menu" >\
+									<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
+									<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
+									<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
+									<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
+									<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph">&lt;p&gt;</a>\
+									<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
+									<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
+									<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
+									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4">h4</a>\
+									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">&lt;img&gt;</a>\
+									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
+									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
+									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
+									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML">source</a>\
+									<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
+									<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
+									<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
+								</div>');
 		// Bind that trick
 		this.bindMenu = function(){
 			// Assign scope to Menu
@@ -270,24 +268,30 @@ var DS = {
 	 		return this.exec('FormatBlock', "p");
 		},
 		exitSourceMode:function(){
-			var scope   = this;
-			var content = $('#reviser_source').val().replace("\n","").replace("\t","");
+			this.sourceMode = false;
+			var scope   		= this;
+			var content 		= $('#reviser_source').val().replace("\n","").replace("\t","");
 			$('#reviser_source',this.editorElement).replaceWith(content);
 			$('#sourceMode',this.html).unbind('click').click(function(){ scope.sourceMode(); });
 			return false;
 		},
 		sourceMode:function(){
-			this.sourceMode = true;
+			this.sourceMode = true; // tell the menu we are editing source
 			var ta 					= $('<textarea id="reviser_source"></textarea>');
 			var el 					= this.editor.editorElement;
 			var content 		= el.html();
-			var scope   		= this;
-			el.children().wrapAll(ta);
+			var scope   		= this; // needed for rebind of the btn
+			
+			/* wrap the elem in the textarea. You would think this 
+			would place the innerHTML in the ta but this is not so.
+			so we store the content and set the val after wrapping*/
+			el.children().wrapAll(ta); 
 			$('#reviser_source').val(content);
 			$('#reviser_source').css({
 				'width':el.width()-10,
 				'height':el.height()
 			});
+			// bind the exit method
 			$('#sourceMode',this.html).unbind('click').click(function(){ scope.exitSourceMode(); });
 		},
 		needInput:function(msg) {
