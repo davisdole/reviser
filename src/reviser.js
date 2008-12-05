@@ -94,11 +94,13 @@ var DS = {
 			this.menu.html.css({
 				'position':'absolute',
 				'display':'none',
-				'top':coords.top-40,
+				'top':coords.top-48,
 				'left':coords.left,
-				'z-index':1000003
+				'z-index':1000003,
+				'display':'none',
 			});
-			this.menu.html.show();
+			this.menu.html.fadeIn('medium');
+			//this.menu.html.animate({ marginLeft: 500+coords.left, opacity: 'show'}, "medium");
 		};
 		this.drawOverlay = function(){
 			// if the bgcolor of the element is transparent
@@ -131,7 +133,7 @@ var DS = {
 		};
 		// kill the menu and re-bind
 		this.setElementToNonEditable = function(){
-			this.menu.html.remove();
+			this.menu.html.fadeOut('medium');
 			$('#modal_overlay').fadeOut('medium');
 			this.editorElement.attr('contenteditable',false).css('z-index',100);
 			$(this.editorElement).click(function(){
