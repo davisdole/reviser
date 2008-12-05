@@ -122,9 +122,7 @@ var DS = {
 				'position':'relative',
 				'background':bgcolor
 			});
-			$('#modal_overlay').fadeIn('medium');
-			var scope = this;
-			$('#modal_overlay').click(this.menu.revert);
+			$('#modal_overlay').fadeIn('medium').click(this.menu.revert);
 		};
 		
 		// get rid of the click and start editing
@@ -149,6 +147,7 @@ var DS = {
 		this.setupEditor();
 	},
 	Menu:function(editor){
+		this.sourceMode = false;
 		// Loading the Commands
 		$.extend(this,DS.Commands);
 		this.editor = editor;
@@ -167,6 +166,7 @@ var DS = {
 			<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
 			<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
 			<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
+			<a href="#" class="reviser_btn" id="sourceMode" alt="HTML">source</a>\
 			<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
 			<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
 			<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
@@ -185,6 +185,7 @@ var DS = {
 		};
 		// Kill editing and send callbacks with elems innerHtml
 		this.save = function(){
+			if (this.sourceMode) this.exitSourceMode();
 			// pre-process through beforeSave
 			if (editor.editorType=='inline') {
 				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
@@ -267,6 +268,27 @@ var DS = {
 		},
 		insertP: function() {
 	 		return this.exec('FormatBlock', "p");
+		},
+		exitSourceMode:function(){
+			var scope   = this;
+			var content = $('#reviser_source').val().replace("\n","").replace("\t","");
+			$('#reviser_source',this.editorElement).replaceWith(content);
+			$('#sourceMode',this.html).unbind('click').click(function(){ scope.sourceMode(); });
+			return false;
+		},
+		sourceMode:function(){
+			this.sourceMode = true;
+			var ta 					= $('<textarea id="reviser_source"></textarea>');
+			var el 					= this.editor.editorElement;
+			var content 		= el.html();
+			var scope   		= this;
+			el.children().wrapAll(ta);
+			$('#reviser_source').val(content);
+			$('#reviser_source').css({
+				'width':el.width()-10,
+				'height':el.height()
+			});
+			$('#sourceMode',this.html).unbind('click').click(function(){ scope.exitSourceMode(); });
 		},
 		needInput:function(msg) {
 			var resp = prompt(msg);
