@@ -183,7 +183,7 @@ var DS = {
 		};
 		// Kill editing and send callbacks with elems innerHtml
 		this.save = function(){
-			if (this.sourceMode) this.exitSourceMode();
+			if (this.sourceModeActive) this.exitSourceMode();
 			// pre-process through beforeSave
 			if (editor.editorType=='inline') {
 				editor.editorElement.html(editor.beforeSaveCallBack(editor.editorElement.html()));
@@ -268,7 +268,7 @@ var DS = {
 	 		return this.exec('FormatBlock', "p");
 		},
 		exitSourceMode:function(){
-			this.sourceMode = false;
+			this.sourceModeActive = false;
 			var scope   		= this;
 			var content 		= $('#reviser_source').val().replace("\n","").replace("\t","");
 			$('#reviser_source',this.editorElement).replaceWith(content);
@@ -276,7 +276,7 @@ var DS = {
 			return false;
 		},
 		sourceMode:function(){
-			this.sourceMode = true; // tell the menu we are editing source
+			this.sourceModeActive = true; // tell the menu we are editing source
 			var ta 					= $('<textarea id="reviser_source"></textarea>');
 			var el 					= this.editor.editorElement;
 			var content 		= el.html();
