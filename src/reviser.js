@@ -1,7 +1,7 @@
 var DS = {
 	Modal:function(cfg){
 		this.displayElem = cfg.displayElem;
-		this._w		  		 = cfg._w || 'auto';
+		this._w		  		 = cfg._w || '598px';
 		this._h		  		 = cfg._h || 'auto';
 		
 		this.winHTML 	   = $('<table class="twoism_modal">\
@@ -29,7 +29,7 @@ var DS = {
 			$('#tm_content', this.winHTML).html(this.displayElem);
 			var x = ($('body').width()/2)-(this._w/2);
 			this.winHTML.css({
-				'width':this._w  + 'px',
+				'width':this._w + 'px',
 				'height':this._h + 'px',
 				'position':'absolute',
 				'z-index':100005,
@@ -67,8 +67,8 @@ var DS = {
 			frame.append(this.menu.html);
 			frame.append(editorContent);
 			this.modal = new DS.Modal({
-				_w: 620,
-				_h: 400,
+				_w: 598,
+
 				displayElem:frame
 			});
 			this.editorElement = editorContent;
@@ -94,7 +94,7 @@ var DS = {
 			this.menu.html.css({
 				'position':'absolute',
 				'display':'none',
-				'top':coords.top-24,
+				'top':coords.top-40,
 				'left':coords.left,
 				'z-index':1000003
 			});
@@ -151,23 +151,22 @@ var DS = {
 		this.editor = editor;
 		// This should be passed in through a cfg at soem point
 		this.html = this.editor.cfg.menuHTML || $('<div class="reviser_menu" >\
-									<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
-									<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
-									<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
-									<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><u>U</u></a>\
-									<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph">&lt;p&gt;</a>\
-									<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1">h1</a>\
-									<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2">h2</a>\
-									<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3">h3</a>\
-									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4">h4</a>\
-									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image">&lt;img&gt;</a>\
-									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link">&lt;href&gt;</a>\
-									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List">&lt;ol&gt;</a>\
-									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List">&lt;ul&gt;</a>\
-									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML">source</a>\
-									<!--<a href="#" class="reviser_btn" id="insertHTML" alt="Insert HTML">html</a>-->\
-									<a href="#" class="reviser_btn" id="save" alt="Save">save</a>\
-									<a href="#" class="reviser_btn" id="revert" alt="Cancel">cancel</a>\
+									<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><img src="/src/images/btn_strong.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><img src="/src/images/btn_em.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><img src="/src/images/btn_strike.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><img src="/src/images/btn_underline.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph"><img src="/src/images/btn_para.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1"><img src="/src/images/btn_h1.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2"><img src="/src/images/btn_h2.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3"><img src="/src/images/btn_h3.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4"><img src="/src/images/btn_h4.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image"><img src="/src/images/btn_image.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link"><img src="/src/images/btn_link.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List"><img src="/src/images/btn_ul.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List"><img src="/src/images/btn_ul.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML"><img src="/src/images/btn_source.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="save" alt="Save"><img src="/src/images/btn_save.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="revert" alt="Cancel"><img src="/src/images/btn_cancel.png" border="0"></a>\
 								</div>');
 		// Bind that trick
 		this.bindMenu = function(){
@@ -272,7 +271,7 @@ var DS = {
 			var scope   		= this;
 			var content 		= $('#reviser_source').val().replace("\n","").replace("\t","");
 			$('#reviser_source',this.editorElement).replaceWith(content);
-			$('#sourceMode',this.html).unbind('click').click(function(){ scope.sourceMode(); });
+			$('#sourceMode',this.html).unbind('click').click(function(){ scope.sourceMode(); return false; });
 			return false;
 		},
 		sourceMode:function(){
@@ -292,7 +291,7 @@ var DS = {
 				'height':el.height()
 			});
 			// bind the exit method
-			$('#sourceMode',this.html).unbind('click').click(function(){ scope.exitSourceMode(); });
+			$('#sourceMode',this.html).unbind('click').click(function(){ scope.exitSourceMode(); return false; });
 		},
 		needInput:function(msg) {
 			var resp = prompt(msg);

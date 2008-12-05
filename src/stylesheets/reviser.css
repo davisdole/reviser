@@ -14,14 +14,21 @@
 }
 
 .reviser_menu{
-	background:#ccc;
-	padding:3px;
+	background:url(../../src/images/menu_bg.png) no-repeat;
 	/*border:1px dotted #000;*/
 	border-bottom:none;
+	width:582px;
+	height:22px;
+	padding:8px;
+	border:1px solid #666;
 }
 .reviser_menu a {
 	color:#000;
 	text-decoration:none;
-	background:#eee;
 	padding:3px;
+	margin-right:5px;
+}
+
+.reviser_menu a img {
+	cursor:pointer;
 }
