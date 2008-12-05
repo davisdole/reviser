@@ -20,6 +20,7 @@ var DS = {
 		this.closeModal  = function() {
 			var win = this.winHTML;
 			this.winHTML.fadeOut('medium',function(){
+				$('#modal_overlay').remove();
 				win.remove();
 			});
 			return false;
@@ -31,11 +32,11 @@ var DS = {
 				'width':this._w  + 'px',
 				'height':this._h + 'px',
 				'position':'absolute',
+				'z-index':100005,
 				'display':'none',
 				'left':x,
 				'top':$(document).scrollTop()+20
 			});
-			
 			$('body').append(this.winHTML);
 			this.winHTML.fadeIn('medium');
 			return this;
@@ -48,6 +49,7 @@ var DS = {
 		/* initialization */
 		this.cfg 								= cfg;
 		this.threshold					= cfg.threshold || 600;
+		this.overlay  					= cfg.overlay   || true;
 		// Assign CallBacks
 		this.beforeSaveCallBack = cfg.beforeSave || function(html){return html;};
 		this.afterSaveCallBack  = cfg.afterSave  || function(){return false;};
@@ -77,11 +79,13 @@ var DS = {
 			// create a new Menu and pass it an editor instance
 			this.menu = new DS.Menu(this); 
 			if (this.editorType == 'inline') {
+				
 				this.appendMenuToElement();
 				this.setElementToEditable();
 			}else{
 				this.drawModalEditor();
 			}
+			if (this.overlay) this.drawOverlay();
 			// save the content for revert
 			this.contentBackup = this.editorElement.html(); 
 		};
@@ -94,25 +98,47 @@ var DS = {
 				'position':'absolute',
 				'display':'none',
 				'top':coords.top-24,
-				'left':coords.left
+				'left':coords.left,
+				'z-index':1000003
 			});
 			//this.menu.slideToggle('medium');
 			this.menu.show();
 		};
 		
+		this.drawOverlay = function(){
+			var bgcolor = (this.editorElement.css('background-color') != 'transparent') ? this.editorElement.css('background-color') : '#fff'
+			$('body').append('<div id="modal_overlay"></div>');
+			$('#modal_overlay').css({
+				'background-color':'#000000',
+				'height':$(document).height(),
+				'left':0,
+				'opacity':0.7,
+				'position':'absolute',
+				'top':0,
+				'width':'100%',
+				'z-index':100002,
+				'display':'none'
+			});
+			this.editorElement.css({
+				'z-index':1000003,
+				'position':'relative',
+				'background':bgcolor
+			});
+			$('#modal_overlay').fadeIn('medium');
+		};
+		
 		// get rid of the click and start editing
 		this.setElementToEditable = function(){
+			
 			this.editorElement.unbind('click'); 
 			this.editorElement.attr('contenteditable',true);
 			return true;
 		};
 		// kill the menu and re-bind
 		this.setElementToNonEditable = function(){
-			/*menu.slideToggle('medium',function(){
-				menu.remove();
-			});*/
 			this.menu.remove();
-			this.editorElement.attr('contenteditable',false);
+			$('#modal_overlay').fadeOut('medium');
+			this.editorElement.attr('contenteditable',false).css('z-index',100);
 			$(this.editorElement).click(function(){
 				this.editor = new DS.Reviser(this.editor.cfg);
 			});
