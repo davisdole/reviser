@@ -66,7 +66,7 @@ var DS = {
 			var frame = $('<div id="modal_reviser"></div>');
 			var editorContent = $('<div id="editorContent" contenteditable="true"></div>');
 			editorContent.html(this.editorElement.html());
-			frame.append(this.menu);
+			frame.append(this.menu.html);
 			frame.append(editorContent);
 			this.modal = new DS.Modal({
 				_w: 620,
@@ -79,7 +79,6 @@ var DS = {
 			// create a new Menu and pass it an editor instance
 			this.menu = new DS.Menu(this); 
 			if (this.editorType == 'inline') {
-				
 				this.appendMenuToElement();
 				this.setElementToEditable();
 			}else{
@@ -91,18 +90,17 @@ var DS = {
 		};
 		this.appendMenuToElement = function() {
 			var coords = this.editorElement.offset();
-			this.menu.attr("id",this.editorElement[0].id + '_reviser');
-			$('body').append(this.menu);
+			this.menu.html.attr("id",this.editorElement[0].id + '_reviser');
+			$('body').append(this.menu.html);
 			// postioning the menu
-			this.menu.css({
+			this.menu.html.css({
 				'position':'absolute',
 				'display':'none',
 				'top':coords.top-24,
 				'left':coords.left,
 				'z-index':1000003
 			});
-			//this.menu.slideToggle('medium');
-			this.menu.show();
+			this.menu.html.show();
 		};
 		
 		this.drawOverlay = function(){
@@ -125,18 +123,19 @@ var DS = {
 				'background':bgcolor
 			});
 			$('#modal_overlay').fadeIn('medium');
+			var scope = this;
+			$('#modal_overlay').click(this.menu.revert);
 		};
 		
 		// get rid of the click and start editing
 		this.setElementToEditable = function(){
-			
 			this.editorElement.unbind('click'); 
 			this.editorElement.attr('contenteditable',true);
 			return true;
 		};
 		// kill the menu and re-bind
 		this.setElementToNonEditable = function(){
-			this.menu.remove();
+			this.menu.html.remove();
 			$('#modal_overlay').fadeOut('medium');
 			this.editorElement.attr('contenteditable',false).css('z-index',100);
 			$(this.editorElement).click(function(){
@@ -154,7 +153,7 @@ var DS = {
 		$.extend(this,DS.Commands);
 		this.editor = editor;
 		// This should be passed in through a cfg at soem point
-		var menu = $('<div class="reviser_menu" >\
+		this.html = $('<div class="reviser_menu" >\
 			<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><strong>B</strong></a>\
 			<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><em>I</em></a>\
 			<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><strike>abc</strike></a>\
@@ -176,7 +175,7 @@ var DS = {
 		this.bindMenu = function(){
 			// Assign scope to Menu
 			var scope 	= this;
-			$('.reviser_btn',menu).each(function(){
+			$('.reviser_btn',this.html).each(function(){
 				$(this).click(function(){
 					// Methods bound to dom elems but scoped to Menu 
 					scope[this.id].call(scope);
@@ -206,7 +205,7 @@ var DS = {
 		};
 		// bind that trick
 		this.bindMenu();
-		return menu;
+		return this;
 	},
 	// Base commands for an editable area.
 	// "Borrowed" from wysihat.
