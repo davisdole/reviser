@@ -41,7 +41,7 @@
 			$('.reviser').click(function(){
 				this.editor = new DS.Reviser({
 					elm:this,
-					editorType:'inline',
+					imageDir  :'images',
 					beforeSave:function(html){
 						return html;
 						console.log("Before Save");

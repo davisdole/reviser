@@ -3,7 +3,6 @@ var DS = {
 		this.displayElem = cfg.displayElem;
 		this._w		  		 = cfg._w || '598px';
 		this._h		  		 = cfg._h || 'auto';
-		
 		this.winHTML 	   = $('<table class="twoism_modal">\
 													<tr>\
 														<td colspan="3" class="tm_top"></td>\
@@ -48,6 +47,7 @@ var DS = {
 		this.cfg 								= cfg;
 		this.threshold					= cfg.threshold || 600;
 		this.overlay  					= cfg.overlay   || true;
+		this.imageDir		        = cfg.imageDir || "/reviser/images"
 		// Assign CallBacks
 		this.beforeSaveCallBack = cfg.beforeSave || function(html){return html;};
 		this.afterSaveCallBack  = cfg.afterSave  || function(){return false;};
@@ -153,22 +153,22 @@ var DS = {
 		this.editor = editor;
 		// This should be passed in through a cfg at soem point
 		this.html = this.editor.cfg.menuHTML || $('<div class="reviser_menu" >\
-									<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><img src="/src/images/btn_strong.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><img src="/src/images/btn_em.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><img src="/src/images/btn_strike.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><img src="/src/images/btn_underline.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph"><img src="/src/images/btn_para.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1"><img src="/src/images/btn_h1.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2"><img src="/src/images/btn_h2.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3"><img src="/src/images/btn_h3.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4"><img src="/src/images/btn_h4.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image"><img src="/src/images/btn_image.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link"><img src="/src/images/btn_link.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List"><img src="/src/images/btn_ol.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List"><img src="/src/images/btn_ul.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML"><img src="/src/images/btn_source.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="save" alt="Save"><img src="/src/images/btn_save.png" border="0"></a>\
-									<a href="#" class="reviser_btn" id="revert" alt="Cancel"><img src="/src/images/btn_cancel.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="boldSelection" alt="Text Bold"><img src="'+this.editor.imageDir+'/btn_strong.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="italicSelection" alt="Text Italic"><img src="'+this.editor.imageDir+'/btn_em.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="strikethroughSelection" alt="Text Strike"><img src="'+this.editor.imageDir+'/btn_strike.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="underlineSelection" alt="Text Under"><img src="'+this.editor.imageDir+'/btn_underline.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertP" alt="Insert Paragraph"><img src="'+this.editor.imageDir+'/btn_para.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH1" alt="Insert H1"><img src="'+this.editor.imageDir+'/btn_h1.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH2" alt="Insert H2"><img src="'+this.editor.imageDir+'/btn_h2.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH3" alt="Insert H3"><img src="'+this.editor.imageDir+'/btn_h3.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertH4" alt="Insert H4"><img src="'+this.editor.imageDir+'/btn_h4.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertImage" alt="Insert Image"><img src="'+this.editor.imageDir+'/btn_image.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="createLink" alt="Insert Link"><img src="'+this.editor.imageDir+'/btn_link.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertOrderedList" alt="Insert Ordered List"><img src="'+this.editor.imageDir+'/btn_ul.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="insertUnorderedList" alt="Insert Ordered List"><img src="'+this.editor.imageDir+'/btn_ul.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="sourceMode" alt="HTML"><img src="'+this.editor.imageDir+'/btn_source.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="save" alt="Save"><img src="'+this.editor.imageDir+'/btn_save.png" border="0"></a>\
+									<a href="#" class="reviser_btn" id="revert" alt="Cancel"><img src="'+this.editor.imageDir+'/btn_cancel.png" border="0"></a>\
 								</div>');
 		// Bind that trick
 		this.bindMenu = function(){
@@ -208,7 +208,6 @@ var DS = {
 		return this;
 	},
 	// Base commands for an editable area.
-	// "Borrowed" from wysihat.
 	Commands:{
 		createLink:function() {
 			url = this.needInput("What url? (Use http://)");
